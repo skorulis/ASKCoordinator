@@ -4,11 +4,12 @@ import SwiftUI
 
 public protocol Coordinator: AnyObject {
     var navPath: NavigationPath { get set }
+    var root: PathWrapper { get }
     // var presented: PresentedCoordinator<Self>? { get set }
     
-    func push<Path: CoordinatorPath>(_ path: Path) where Path.CoordinatorType == Self
+    func push(_ path: any CoordinatorPath)
     func pop()
-    func present(_ path: any CoordinatorPath, style: PresentationStyle)
+    // func present(_ path: any CoordinatorPath, style: PresentationStyle)
 }
 
 public extension Coordinator {
@@ -17,8 +18,8 @@ public extension Coordinator {
         navPath.removeLast()
     }
     
-    func push<Path: CoordinatorPath>(_ path: Path) where Path.CoordinatorType == Self {
-        navPath.append(path)
+    func push(_ path: any CoordinatorPath) {
+        navPath.append(PathWrapper(path: path))
     }
 }
 

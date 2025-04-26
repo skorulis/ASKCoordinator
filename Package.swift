@@ -14,21 +14,11 @@ let package = Package(
             name: "ASKCoordinator",
             targets: ["ASKCoordinator"]),
     ],
-    dependencies: [
-        .package(url: "https://github.com/cashapp/knit.git", exact: "2.0.1")
-    ],
     targets: [
         .target(
             name: "ASKCoordinator",
-            dependencies: [
-                .product(name: "Knit", package: "knit")
-            ],
+            dependencies: [],
             path: "Sources"
         ),
-        .testTarget(
-            name: "ASKCoreUnitTests",
-            dependencies: ["ASKCore"],
-            path: "UnitTests"
-            ),
     ]
 )
