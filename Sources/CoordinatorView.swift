@@ -25,7 +25,7 @@ public struct CoordinatorView<T: Coordinator>: View {
     
     private func render(pathWrapper: PathWrapper) -> AnyView {
         let renderer = renderer(for: pathWrapper.path)
-        return renderer.render(any: coordinator.root.path, in: coordinator)
+        return AnyView(renderer.render(any: pathWrapper.path, in: coordinator))
     }
     
     private func renderer(for path: any CoordinatorPath) -> any CoordinatorPathRenderer {
@@ -35,6 +35,9 @@ public struct CoordinatorView<T: Coordinator>: View {
         return renderer
     }
     
+    public func with(renderer: any CoordinatorPathRenderer) -> CoordinatorView {
+        return CoordinatorView(coordinator: coordinator, renderers: renderers + [renderer])
+    }
 }
 
 

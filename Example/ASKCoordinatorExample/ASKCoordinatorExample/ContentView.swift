@@ -6,6 +6,7 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         CoordinatorView(coordinator: ExampleCoordinator())
+            .with(renderer: ExamplePathRenderer())
     }
 }
 

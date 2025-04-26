@@ -10,14 +10,15 @@ public protocol CoordinatorPath {
 
 public protocol CoordinatorPathRenderer {
     associatedtype PathType: CoordinatorPath
+    associatedtype ViewType: View
     
     @MainActor
-    func render(path: PathType, in coordinator: Coordinator) -> AnyView
+    func render(path: PathType, in coordinator: Coordinator) -> ViewType
 }
 
 extension CoordinatorPathRenderer {
     @MainActor
-    func render(any path: any CoordinatorPath, in coordinator: Coordinator) -> AnyView {
+    func render(any path: any CoordinatorPath, in coordinator: Coordinator) -> ViewType {
         let path = path as! Self.PathType
         return render(path: path, in: coordinator)
     }
