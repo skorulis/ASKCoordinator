@@ -23,5 +23,13 @@ extension RootView: View {
         Button(action: { coordinator?.push(ExamplePath.view2) }) {
             Text("Push View 2")
         }
+        
+        Button(action: { coordinator?.present(ExamplePath.view2, style: .fullScreen) }) {
+            Text("Present View 2")
+        }
+        
+        Button(action: { coordinator?.present(ExamplePath.view2, style: .sheet) }) {
+            Text("Present View 2 Sheet")
+        }
     }
 }

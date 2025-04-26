@@ -1,9 +1,4 @@
-//
-//  ASKCoordinatorExampleApp.swift
-//  ASKCoordinatorExample
-//
 //  Created by Alexander Skorulis on 27/4/2025.
-//
 
 import SwiftUI
 

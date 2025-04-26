@@ -3,12 +3,12 @@
 import SwiftUI
 
 
-public struct CoordinatorView<T: Coordinator>: View {
+public struct CoordinatorView: View {
     
-    @State var coordinator: T
+    @State var coordinator: Coordinator
     private let renderers: [any CoordinatorPathRenderer]
     
-    public init(coordinator: T, renderers: [any CoordinatorPathRenderer] = []) {
+    public init(coordinator: Coordinator, renderers: [any CoordinatorPathRenderer] = []) {
         self.coordinator = coordinator
         self.renderers = renderers
     }
@@ -21,6 +21,14 @@ public struct CoordinatorView<T: Coordinator>: View {
                 }
         }
         .environment(\.coordinator, coordinator)
+#if canImport(UIKit)
+        .fullScreenCover(item: binding(style: .fullScreen)) { presented in
+            CoordinatorView(coordinator: presented, renderers: renderers)
+        }
+#endif
+        .sheet(item: binding(style: .sheet)) { presented in
+            CoordinatorView(coordinator: presented, renderers: renderers)
+        }
     }
     
     private func render(pathWrapper: PathWrapper) -> AnyView {
@@ -37,6 +45,16 @@ public struct CoordinatorView<T: Coordinator>: View {
     
     public func with(renderer: any CoordinatorPathRenderer) -> CoordinatorView {
         return CoordinatorView(coordinator: coordinator, renderers: renderers + [renderer])
+    }
+    
+    private func binding(style: PresentationStyle) -> Binding<Coordinator?> {
+        return Binding<Coordinator?> {
+            return coordinator.presented?.only(style: style)?.coordinator
+        } set: { newValue in
+            if newValue == nil && coordinator.presented != nil {
+                coordinator.presented = nil
+            }
+        }
     }
 }
 
