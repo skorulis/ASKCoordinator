@@ -4,7 +4,6 @@ import SwiftUI
 
 /// A path describing a screen inside the coordinator
 public protocol CoordinatorPath {
-    associatedtype CoordinatorType: Coordinator
     var id: String { get }
 }
 

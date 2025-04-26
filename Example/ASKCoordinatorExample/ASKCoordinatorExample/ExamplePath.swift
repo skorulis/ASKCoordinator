@@ -4,16 +4,18 @@ import ASKCoordinator
 import SwiftUI
 
 enum ExamplePath: CoordinatorPath {
-    typealias CoordinatorType = ExampleCoordinator
     
+    /// The root view at the bottom of the stack
     case root
+    
+    /// A view demonstating using a view model for navigation
+    case viewModelView
+    
+    ///  A terminal view with only the ability to go back
     case view2
     
     var id: String {
-        switch self {
-        case .root: return "Root"
-        case .view2: return "View2"
-        }
+        return String(describing: self)
     }
 }
 
@@ -21,12 +23,20 @@ struct ExamplePathRenderer: CoordinatorPathRenderer {
     typealias PathType = ExamplePath
     
     @ViewBuilder
-    func render(path: ExamplePath, in coordinator: any ASKCoordinator.Coordinator) -> some View {
+    func render(path: ExamplePath, in coordinator: Coordinator) -> some View {
         switch path {
         case .root:
             RootView()
+        case .viewModelView:
+            viewModelView(coordinator: coordinator)
         case .view2:
             Text("View 2")
         }
+    }
+    
+    private func viewModelView(coordinator: Coordinator) -> some View {
+        let vm = ViewModel()
+        vm.coordinator = coordinator
+        return ViewModelView(viewModel: vm)
     }
 }

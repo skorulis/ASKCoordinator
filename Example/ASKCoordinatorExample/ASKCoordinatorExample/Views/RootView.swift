@@ -15,8 +15,13 @@ extension RootView: View {
     
     var body: some View {
         Text("Root")
+        
+        Button(action: { coordinator?.push(ExamplePath.viewModelView) }) {
+            Text("Push View Model View")
+        }
+        
         Button(action: { coordinator?.push(ExamplePath.view2) }) {
-            Text("Push")
+            Text("Push View 2")
         }
     }
 }

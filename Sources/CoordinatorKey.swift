@@ -4,12 +4,12 @@ import Foundation
 import SwiftUI
 
 public struct CoordinatorKey: EnvironmentKey {
-    public static var defaultValue: (any Coordinator)? = nil
+    public static var defaultValue: (Coordinator)? = nil
 }
 
 public extension EnvironmentValues {
     
-    var coordinator: (any Coordinator)? {
+    var coordinator: (Coordinator)? {
         get { self[CoordinatorKey.self] }
         set { self[CoordinatorKey.self] = newValue }
     }

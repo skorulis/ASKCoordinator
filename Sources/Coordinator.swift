@@ -2,25 +2,25 @@
 
 import SwiftUI
 
-public protocol Coordinator: AnyObject {
-    var navPath: NavigationPath { get set }
-    var root: PathWrapper { get }
+@Observable public final class Coordinator {
+    var navPath: NavigationPath = NavigationPath()
+    let root: PathWrapper
     // var presented: PresentedCoordinator<Self>? { get set }
     
-    func push(_ path: any CoordinatorPath)
-    func pop()
-    // func present(_ path: any CoordinatorPath, style: PresentationStyle)
-}
-
-public extension Coordinator {
-    func pop() {
+    public init(root: any CoordinatorPath) {
+        self.root = PathWrapper(path: root)
+    }
+    
+    public func pop() {
         guard !navPath.isEmpty else { return }
         navPath.removeLast()
     }
     
-    func push(_ path: any CoordinatorPath) {
+    public func push(_ path: any CoordinatorPath) {
         navPath.append(PathWrapper(path: path))
     }
+    
+    // func present(_ path: any CoordinatorPath, style: PresentationStyle)
 }
 
 public enum PresentationStyle {
