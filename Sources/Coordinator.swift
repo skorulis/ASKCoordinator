@@ -6,6 +6,7 @@ import SwiftUI
     var navPath: NavigationPath = NavigationPath()
     let root: PathWrapper
     var presented: PresentedCoordinator?
+    var shouldDismiss: Bool = false
     public var id: String { root.id }
     
     public init(root: any CoordinatorPath) {
@@ -26,6 +27,17 @@ import SwiftUI
         self.presented = .init(coordinator: coordinator, style: style)
     }
     
+    public func retreat() {
+        if !navPath.isEmpty {
+            self.pop()
+        } else {
+            self.dismiss()
+        }
+    }
+    
+    public func dismiss() {
+        self.shouldDismiss = true
+    }
     
 }
 

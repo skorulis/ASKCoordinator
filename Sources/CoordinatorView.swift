@@ -7,6 +7,7 @@ public struct CoordinatorView: View {
     
     @State var coordinator: Coordinator
     private let renderers: [any CoordinatorPathRenderer]
+    @Environment(\.dismiss) private var dismiss
     
     public init(coordinator: Coordinator, renderers: [any CoordinatorPathRenderer] = []) {
         self.coordinator = coordinator
@@ -21,6 +22,11 @@ public struct CoordinatorView: View {
                 }
         }
         .environment(\.coordinator, coordinator)
+        .onChange(of: coordinator.shouldDismiss, { _, newValue in
+            if newValue {
+                dismiss()
+            }
+        })
 #if canImport(UIKit)
         .fullScreenCover(item: binding(style: .fullScreen)) { presented in
             CoordinatorView(coordinator: presented, renderers: renderers)

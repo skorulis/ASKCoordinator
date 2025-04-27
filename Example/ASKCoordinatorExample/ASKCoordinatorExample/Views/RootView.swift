@@ -14,22 +14,24 @@ struct RootView {
 extension RootView: View {
     
     var body: some View {
-        Text("Root")
-        
-        Button(action: { coordinator?.push(ExamplePath.viewModelView) }) {
-            Text("Push View Model View")
-        }
-        
-        Button(action: { coordinator?.push(ExamplePath.view2) }) {
-            Text("Push View 2")
-        }
-        
-        Button(action: { coordinator?.present(ExamplePath.view2, style: .fullScreen) }) {
-            Text("Present View 2")
-        }
-        
-        Button(action: { coordinator?.present(ExamplePath.view2, style: .sheet) }) {
-            Text("Present View 2 Sheet")
+        VStack(spacing: 12) {
+            Text("Root")
+            
+            Button(action: { coordinator?.push(ExamplePath.viewModelView) }) {
+                Text("Push View Model View")
+            }
+            
+            Button(action: { coordinator?.push(ExamplePath.view2) }) {
+                Text("Push View 2")
+            }
+            
+            Button(action: { coordinator?.present(ExamplePath.view2, style: .fullScreen) }) {
+                Text("Present View 2")
+            }
+            
+            Button(action: { coordinator?.present(ExamplePath.view2, style: .sheet) }) {
+                Text("Present View 2 Sheet")
+            }
         }
     }
 }

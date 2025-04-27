@@ -30,7 +30,7 @@ struct ExamplePathRenderer: CoordinatorPathRenderer {
         case .viewModelView:
             viewModelView(coordinator: coordinator)
         case .view2:
-            Text("View 2")
+            View2()
         }
     }
     
