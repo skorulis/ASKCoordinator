@@ -2,6 +2,7 @@
 
 import SwiftUI
 
+/// The coordinator is responsible for managing navigation between paths
 @Observable public final class Coordinator: Identifiable {
     var navPath: NavigationPath = NavigationPath()
     let root: PathWrapper
@@ -13,20 +14,24 @@ import SwiftUI
         self.root = PathWrapper(path: root)
     }
     
+    /// Pop a path off the navigation stack
     public func pop() {
         guard !navPath.isEmpty else { return }
         navPath.removeLast()
     }
     
+    /// Push a path onto the navigation stack
     public func push(_ path: any CoordinatorPath) {
         navPath.append(PathWrapper(path: path))
     }
     
+    /// Present a path on top of the current view
     public func present(_ path: any CoordinatorPath, style: PresentationStyle) {
         let coordinator = Coordinator(root: path)
         self.presented = .init(coordinator: coordinator, style: style)
     }
     
+    /// Either pop the navigation stack or dismiss
     public func retreat() {
         if !navPath.isEmpty {
             self.pop()
@@ -35,22 +40,23 @@ import SwiftUI
         }
     }
     
+    /// Dismiss the coordinator (if presented)
     public func dismiss() {
         self.shouldDismiss = true
     }
     
 }
 
-public struct PresentedCoordinator: Identifiable {
+struct PresentedCoordinator: Identifiable {
     
-    public let coordinator: Coordinator
-    public let style: PresentationStyle
+    let coordinator: Coordinator
+    let style: PresentationStyle
     
-    public var id: String {
+    var id: String {
         return coordinator.root.id
     }
     
-    public init(coordinator: Coordinator, style: PresentationStyle) {
+    init(coordinator: Coordinator, style: PresentationStyle) {
         self.coordinator = coordinator
         self.style = style
     }
@@ -62,9 +68,9 @@ public struct PresentedCoordinator: Identifiable {
         default: return nil
         }
     }
-    
 }
 
+/// How to present the given view
 public enum PresentationStyle {
     case fullScreen, sheet
 }
