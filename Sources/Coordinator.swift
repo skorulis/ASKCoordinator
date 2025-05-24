@@ -14,6 +14,8 @@ import SwiftUI
         self.root = PathWrapper(path: root)
     }
     
+    public var canPop: Bool { !navPath.isEmpty }
+    
     /// Pop a path off the navigation stack
     public func pop() {
         guard !navPath.isEmpty else { return }
