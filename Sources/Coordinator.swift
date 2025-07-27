@@ -22,6 +22,13 @@ import SwiftUI
         navPath.removeLast()
     }
     
+    public func popToRoot() {
+        guard !navPath.isEmpty else { return }
+        while canPop {
+            pop()
+        }
+    }
+    
     /// Push a path onto the navigation stack
     public func push(_ path: any CoordinatorPath) {
         navPath.append(PathWrapper(path: path))
