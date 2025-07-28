@@ -24,9 +24,7 @@ import SwiftUI
     
     public func popToRoot() {
         guard !navPath.isEmpty else { return }
-        while canPop {
-            pop()
-        }
+        navPath.removeLast(navPath.count)
     }
     
     /// Push a path onto the navigation stack
