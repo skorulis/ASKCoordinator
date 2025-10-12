@@ -14,9 +14,15 @@ enum ExamplePath: CoordinatorPath {
     ///  A terminal view with only the ability to go back
     case view2
     
+    case overlay
+    
     var id: String {
         return String(describing: self)
     }
+}
+
+extension CustomOverlay.Name {
+    static let dialog = CustomOverlay.Name("dialog")
 }
 
 struct ExamplePathRenderer: CoordinatorPathRenderer {
@@ -31,6 +37,8 @@ struct ExamplePathRenderer: CoordinatorPathRenderer {
             viewModelView(coordinator: coordinator)
         case .view2:
             View2()
+        case .overlay:
+            Text("Overlay text")
         }
     }
     

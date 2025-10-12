@@ -7,11 +7,17 @@ public struct CoordinatorView: View {
     
     @State var coordinator: Coordinator
     private let renderers: [any CoordinatorPathRenderer]
+    private let overlayRenderers: [CustomOverlay.Name:  CustomOverlayRenderer]
     @Environment(\.dismiss) private var dismiss
     
-    public init(coordinator: Coordinator, renderers: [any CoordinatorPathRenderer] = []) {
+    public init(
+        coordinator: Coordinator,
+        renderers: [any CoordinatorPathRenderer] = [],
+        overlayRenderers: [CustomOverlay.Name:  CustomOverlayRenderer] = [:]
+    ) {
         self.coordinator = coordinator
         self.renderers = renderers
+        self.overlayRenderers = overlayRenderers
     }
     
     public var body: some View {
@@ -35,6 +41,14 @@ public struct CoordinatorView: View {
         .sheet(item: binding(style: .sheet)) { presented in
             CoordinatorView(coordinator: presented, renderers: renderers)
         }
+        .overlay(
+            CustomOverlayView(
+                coordinator: coordinator,
+                overlays: $coordinator.customOverlays,
+                renderers: renderers,
+                overlayRenderers: overlayRenderers,
+            )
+        )
     }
     
     private func render(pathWrapper: PathWrapper) -> AnyView {
@@ -50,7 +64,21 @@ public struct CoordinatorView: View {
     }
     
     public func with(renderer: any CoordinatorPathRenderer) -> CoordinatorView {
-        return CoordinatorView(coordinator: coordinator, renderers: renderers + [renderer])
+        return CoordinatorView(
+            coordinator: coordinator,
+            renderers: renderers + [renderer],
+            overlayRenderers: overlayRenderers,
+        )
+    }
+    
+    public func with(overlay: CustomOverlay.Name, renderer: @escaping CustomOverlayRenderer) -> CoordinatorView {
+        var dict = self.overlayRenderers
+        dict[overlay] = renderer
+        return CoordinatorView(
+            coordinator: coordinator,
+            renderers: renderers,
+            overlayRenderers: dict,
+        )
     }
     
     private func binding(style: PresentationStyle) -> Binding<Coordinator?> {

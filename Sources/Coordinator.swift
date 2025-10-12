@@ -7,6 +7,7 @@ import SwiftUI
     var navPath: NavigationPath = NavigationPath()
     let root: PathWrapper
     var presented: PresentedCoordinator?
+    var customOverlays: [CustomOverlay] = []
     var shouldDismiss: Bool = false
     public var id: String { root.id }
     
@@ -36,6 +37,11 @@ import SwiftUI
     public func present(_ path: any CoordinatorPath, style: PresentationStyle) {
         let coordinator = Coordinator(root: path)
         self.presented = .init(coordinator: coordinator, style: style)
+    }
+    
+    /// Add a custom overlay using a previously defined type of rendering
+    public func custom(overlay: CustomOverlay.Name, _ path: any CoordinatorPath) {
+        customOverlays.append(CustomOverlay(name: overlay, path: PathWrapper(path: path)))
     }
     
     /// Either pop the navigation stack or dismiss
