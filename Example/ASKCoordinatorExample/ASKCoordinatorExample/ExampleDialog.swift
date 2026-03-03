@@ -35,12 +35,6 @@ extension ExampleDialog: View {
     }
 }
 
-struct ExampleDialogModifier: ViewModifier {
-    func body(content: Content) -> some View {
-        ExampleDialog(content: { content })
-    }
-}
-
 // MARK: - Previews
 
 #Preview {

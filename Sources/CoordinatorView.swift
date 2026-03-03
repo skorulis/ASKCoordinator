@@ -9,24 +9,22 @@ public struct CoordinatorView: View {
     private let renderers: [any CoordinatorPathRenderer]
     private let overlayRenderers: [CustomOverlay.Name:  CustomOverlayRenderer]
     @Environment(\.dismiss) private var dismiss
+    private let useNavigationStack: Bool
     
     public init(
         coordinator: Coordinator,
         renderers: [any CoordinatorPathRenderer] = [],
-        overlayRenderers: [CustomOverlay.Name:  CustomOverlayRenderer] = [:]
+        overlayRenderers: [CustomOverlay.Name:  CustomOverlayRenderer] = [:],
+        useNavigationStack: Bool = true,
     ) {
         self.coordinator = coordinator
         self.renderers = renderers
         self.overlayRenderers = overlayRenderers
+        self.useNavigationStack = useNavigationStack
     }
     
     public var body: some View {
-        NavigationStack(path: $coordinator.navPath) {
-            render(pathWrapper: coordinator.root)
-                .navigationDestination(for: PathWrapper.self) { path in
-                    render(pathWrapper: path)
-                }
-        }
+        mainContent
         .environment(\.coordinator, coordinator)
         .onChange(of: coordinator.shouldDismiss, { _, newValue in
             if newValue {
@@ -51,6 +49,22 @@ public struct CoordinatorView: View {
         )
     }
     
+    @ViewBuilder
+    private var mainContent: some View {
+        if useNavigationStack {
+            NavigationStack(path: $coordinator.navPath) {
+                render(pathWrapper: coordinator.root)
+                    .navigationDestination(for: PathWrapper.self) { path in
+                        render(pathWrapper: path)
+                    }
+            }
+        } else {
+            // Push navigation is not allowed
+            render(pathWrapper: coordinator.root)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+        }
+    }
+    
     private func render(pathWrapper: PathWrapper) -> AnyView {
         let renderer = renderer(for: pathWrapper.path)
         return AnyView(renderer.render(any: pathWrapper.path, in: coordinator))
@@ -68,6 +82,7 @@ public struct CoordinatorView: View {
             coordinator: coordinator,
             renderers: renderers + [renderer],
             overlayRenderers: overlayRenderers,
+            useNavigationStack: useNavigationStack,
         )
     }
     
@@ -78,6 +93,7 @@ public struct CoordinatorView: View {
             coordinator: coordinator,
             renderers: renderers,
             overlayRenderers: dict,
+            useNavigationStack: useNavigationStack,
         )
     }
     

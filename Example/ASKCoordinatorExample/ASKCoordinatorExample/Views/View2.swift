@@ -20,6 +20,14 @@ extension View2: View {
             Button(action: { coordinator?.retreat()}) {
                 Text("Retreat")
             }
+            
+            Button(action: { showDialog() }) {
+                Text("Show Dialog")
+            }
         }
+    }
+    
+    private func showDialog() {
+        coordinator?.custom(overlay: .dialog, ExamplePath.overlay)
     }
 }
