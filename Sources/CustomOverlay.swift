@@ -12,7 +12,7 @@ public struct CustomOverlay: Identifiable {
     }
 }
 
-public typealias CustomOverlayRenderer = (AnyView) -> AnyView
+public typealias CustomOverlayRenderer = (AnyView, CoordinatorPath) -> AnyView
 
 extension CustomOverlay {
     public struct Name: Equatable, Hashable {

@@ -10,7 +10,7 @@ struct ContentView: View {
             useNavigationStack: true,
         )
         .with(renderer: ExamplePathRenderer())
-        .with(overlay: .dialog) { view in
+        .with(overlay: .dialog) { view, _ in
             AnyView(ExampleDialog(content: { view }))
         }
     }

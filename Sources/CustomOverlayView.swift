@@ -20,7 +20,8 @@ extension CustomOverlayView: View {
         ZStack {
             ForEach(overlays) { overlay in
                 overlayRenderers[overlay.name]!(
-                    render(pathWrapper: overlay.path)
+                    render(pathWrapper: overlay.path),
+                    overlay.path.path,
                 )
                 .environment(\.dismissCustomOverlay, { dismiss(overlay) })
             }
