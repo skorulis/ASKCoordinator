@@ -24,7 +24,8 @@ public struct CoordinatorView: View {
     }
     
     public var body: some View {
-        mainContent
+        Self._printChanges()
+        return mainContent
         .environment(\.coordinator, coordinator)
         .onChange(of: coordinator.shouldDismiss, { _, newValue in
             if newValue {
