@@ -6,6 +6,7 @@ import SwiftUI
 public struct CustomOverlay: Identifiable {
     let name: CustomOverlay.Name
     let path: PathWrapper
+    var visible: Bool
     
     public var id: String {
         return "\(name.name)-\(path.id)"

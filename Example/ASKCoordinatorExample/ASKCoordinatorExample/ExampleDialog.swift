@@ -9,6 +9,7 @@ import SwiftUI
     var content: () -> Content
     
     @Environment(\.dismissCustomOverlay) private var onDismiss
+    @Environment(\.customOverlayVisible) private var isVisible
 }
 
 // MARK: - Rendering
@@ -28,6 +29,9 @@ extension ExampleDialog: View {
                 .padding(.horizontal, 20)
                 .padding(.vertical, 40)
                 .background(.white)
+                .opacity(isVisible ? 1 : 0)
+                .scaleEffect(isVisible ? 1 : 0.9)
+                .animation(.snappy(duration: 0.25), value: isVisible)
                 .onTapGesture {
                     // Prevent tap from propagating to background
                 }

@@ -40,8 +40,21 @@ import SwiftUI
     }
     
     /// Add a custom overlay using a previously defined type of rendering
-    public func custom(overlay: CustomOverlay.Name, _ path: any CoordinatorPath) {
-        customOverlays.append(CustomOverlay(name: overlay, path: PathWrapper(path: path)))
+    public func custom(
+        overlay: CustomOverlay.Name,
+        _ path: any CoordinatorPath,
+        animated: Bool = true,
+    ) {
+        customOverlays.append(
+            CustomOverlay(name: overlay, path: PathWrapper(path: path), visible: !animated)
+        )
+    }
+    
+    internal func overlayDidAppear(id: String) {
+        guard let index = customOverlays.firstIndex(where: {$0.id == id}) else {
+            return
+        }
+        customOverlays[index].visible = true
     }
     
     /// Either pop the navigation stack or dismiss

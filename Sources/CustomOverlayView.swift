@@ -24,6 +24,10 @@ extension CustomOverlayView: View {
                     overlay.path.path,
                 )
                 .environment(\.dismissCustomOverlay, { dismiss(overlay) })
+                .environment(\.customOverlayVisible, overlay.visible)
+                .onAppear {
+                    coordinator.overlayDidAppear(id: overlay.id)
+                }
             }
         }
     }
@@ -47,4 +51,5 @@ extension CustomOverlayView: View {
 
 extension EnvironmentValues {
     @Entry public var dismissCustomOverlay: () -> Void = {}
+    @Entry public var customOverlayVisible: Bool = true
 }
