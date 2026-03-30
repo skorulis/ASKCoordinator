@@ -2,12 +2,12 @@
 
 import Foundation
 
-public protocol CoordinatorViewModel: AnyObject {
+@MainActor public protocol CoordinatorViewModel: AnyObject {
     var coordinator: Coordinator? { get set }
 }
 
 public extension Coordinator {
-    func apply<Obj>(_ obj: Obj) -> Obj {
+    @MainActor func apply<Obj>(_ obj: Obj) -> Obj {
         (obj as? CoordinatorViewModel)?.coordinator = self
         return obj
     }
