@@ -16,7 +16,7 @@ public struct CustomOverlay: Identifiable {
 public typealias CustomOverlayRenderer = (AnyView, CoordinatorPath) -> AnyView
 
 extension CustomOverlay {
-    public struct Name: Equatable, Hashable {
+    public struct Name: Equatable, Hashable, Sendable {
         let name: String
         
         public init(_ name: String) {
