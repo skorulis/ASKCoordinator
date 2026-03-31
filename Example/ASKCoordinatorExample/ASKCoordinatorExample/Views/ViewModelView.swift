@@ -14,11 +14,14 @@ struct ViewModelView {
 extension ViewModelView: View {
     
     var body: some View {
-        Text("View Model View")
-        
-        Button(action: viewModel.push) {
-            Text("Push View 2")
+        VStack {
+            Text("View Model View")
+            
+            Button(action: viewModel.push) {
+                Text("Push View 2")
+            }
         }
+        .navigationTitle("View Model View")
     }
 }
 

@@ -25,6 +25,7 @@ extension View2: View {
                 Text("Show Dialog")
             }
         }
+        .navigationTitle("View 2")
     }
     
     private func showDialog() {

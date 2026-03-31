@@ -37,5 +37,6 @@ extension RootView: View {
                 Text("Show dialog")
             }
         }
+        .navigationTitle("ASK Coordinator")
     }
 }
