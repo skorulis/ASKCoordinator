@@ -34,17 +34,11 @@ struct ExamplePathRenderer: CoordinatorPathRenderer {
         case .root:
             RootView()
         case .viewModelView:
-            viewModelView(coordinator: coordinator)
+            ViewModelView(viewModel: coordinator.apply(ViewModel()))
         case .view2:
             View2()
         case .overlay:
             Text("Overlay text")
         }
-    }
-    
-    private func viewModelView(coordinator: Coordinator) -> some View {
-        let vm = ViewModel()
-        vm.coordinator = coordinator
-        return ViewModelView(viewModel: vm)
     }
 }

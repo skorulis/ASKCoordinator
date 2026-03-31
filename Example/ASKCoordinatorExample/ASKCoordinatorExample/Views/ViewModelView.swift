@@ -25,11 +25,11 @@ extension ViewModelView: View {
     }
 }
 
-@Observable final class ViewModel {
+@Observable final class ViewModel: CoordinatorViewModel {
     
-    var coordinator: Coordinator!
+    weak var coordinator: Coordinator?
     
     func push() {
-        coordinator.push(ExamplePath.view2)
+        coordinator?.push(ExamplePath.view2)
     }
 }
