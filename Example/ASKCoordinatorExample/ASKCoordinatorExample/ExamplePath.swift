@@ -39,6 +39,9 @@ struct ExamplePathRenderer: CoordinatorPathRenderer {
             View2()
         case .overlay:
             Text("Overlay text")
+                .padding(.horizontal, 20)
+                .padding(.vertical, 40)
+                .background(.white)
         }
     }
 }

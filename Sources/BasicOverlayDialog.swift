@@ -1,12 +1,16 @@
-//  Created by Alexander Skorulis on 12/10/2025.
+//  Created by Alexander Skorulis on 8/4/2026.
 
 import Foundation
 import SwiftUI
 
 // MARK: - Memory footprint
 
-@MainActor struct ExampleDialog<Content: View> {
+@MainActor public struct BasicOverlayDialog<Content: View> {
     var content: () -> Content
+    
+    public init(content: @escaping () -> Content) {
+        self.content = content
+    }
     
     @Environment(\.dismissCustomOverlay) private var onDismiss
     @Environment(\.customOverlayVisible) private var isVisible
@@ -14,9 +18,9 @@ import SwiftUI
 
 // MARK: - Rendering
 
-extension ExampleDialog: View {
+extension BasicOverlayDialog: View {
     
-    var body: some View {
+    public var body: some View {
         ZStack {
             Color.black.opacity(0.6)
                 .ignoresSafeArea()
@@ -26,9 +30,6 @@ extension ExampleDialog: View {
                 .transition(.opacity)
             
             content()
-                .padding(.horizontal, 20)
-                .padding(.vertical, 40)
-                .background(.white)
                 .opacity(isVisible ? 1 : 0)
                 .scaleEffect(isVisible ? 1 : 0.9)
                 .animation(.snappy(duration: 0.25), value: isVisible)
@@ -39,11 +40,6 @@ extension ExampleDialog: View {
     }
 }
 
-// MARK: - Previews
-
-#Preview {
-    ExampleDialog(content: {
-        Text("Testing")
-    })
+extension CustomOverlay.Name {
+    public static let basicDialog = CustomOverlay.Name("basicDialog")
 }
-

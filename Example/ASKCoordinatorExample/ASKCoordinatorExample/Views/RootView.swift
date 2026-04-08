@@ -33,7 +33,7 @@ extension RootView: View {
                 Text("Present View 2 Sheet")
             }
             
-            Button(action: { coordinator?.custom(overlay: .dialog, ExamplePath.overlay) }) {
+            Button(action: { coordinator?.custom(overlay: .basicDialog, ExamplePath.overlay) }) {
                 Text("Show dialog")
             }
         }

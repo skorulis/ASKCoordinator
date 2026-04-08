@@ -15,8 +15,8 @@ struct ContentView: View {
     private var mainTab: some View {
         CoordinatorView(coordinator: Coordinator(root: ExamplePath.root))
             .with(renderer: ExamplePathRenderer())
-            .with(overlay: .dialog) { view, _ in
-                AnyView(ExampleDialog(content: { view }))
+            .with(overlay: .basicDialog) { view, _ in
+                AnyView(BasicOverlayDialog(content: { view }))
             }
             .tabItem {
                 Label("Main", systemImage: "1.circle")
@@ -26,8 +26,8 @@ struct ContentView: View {
     private var secondTab: some View {
         CoordinatorView(coordinator: Coordinator(root: ExamplePath.viewModelView))
             .with(renderer: ExamplePathRenderer())
-            .with(overlay: .dialog) { view, _ in
-                AnyView(ExampleDialog(content: { view }))
+            .with(overlay: .basicDialog) { view, _ in
+                AnyView(BasicOverlayDialog(content: { view }))
             }
             .tabItem {
                 Label("View Model", systemImage: "2.circle")
