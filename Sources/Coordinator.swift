@@ -61,6 +61,8 @@ import SwiftUI
     public func retreat() {
         if !navPath.isEmpty {
             self.pop()
+        } else if !customOverlays.isEmpty {
+            dismissOverlay()
         } else {
             self.dismiss()
         }
@@ -69,6 +71,10 @@ import SwiftUI
     /// Dismiss the coordinator (if presented)
     public func dismiss() {
         self.shouldDismiss = true
+    }
+    
+    public func dismissOverlay() {
+        _ = customOverlays.removeLast()
     }
     
 }

@@ -38,10 +38,29 @@ struct ExamplePathRenderer: CoordinatorPathRenderer {
         case .view2:
             View2()
         case .overlay:
-            Text("Overlay text")
-                .padding(.horizontal, 20)
-                .padding(.vertical, 40)
-                .background(.white)
+            OverlayView(coordinator: coordinator)
         }
+    }
+}
+
+private struct OverlayView: View {
+    
+    let coordinator: Coordinator
+    
+    var body: some View {
+        VStack {
+            Text("Overlay text")
+                
+            Button {
+                coordinator.retreat()
+            } label: {
+                Text("Dismiss")
+            }
+
+        }
+        .padding(.horizontal, 20)
+        .padding(.vertical, 40)
+        .background(.white)
+        
     }
 }
