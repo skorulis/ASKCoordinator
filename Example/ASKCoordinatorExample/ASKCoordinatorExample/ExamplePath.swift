@@ -38,21 +38,21 @@ struct ExamplePathRenderer: CoordinatorPathRenderer {
         case .view2:
             View2()
         case .overlay:
-            OverlayView(coordinator: coordinator)
+            OverlayView()
         }
     }
 }
 
 private struct OverlayView: View {
     
-    let coordinator: Coordinator
+    @Environment(\.coordinator) private var coordinator
     
     var body: some View {
         VStack {
             Text("Overlay text")
                 
             Button {
-                coordinator.retreat()
+                coordinator?.retreat()
             } label: {
                 Text("Dismiss")
             }

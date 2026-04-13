@@ -38,7 +38,10 @@ extension CustomOverlayView: View {
 
     private func render(pathWrapper: PathWrapper) -> AnyView {
         let renderer = renderer(for: pathWrapper.path)
-        return AnyView(renderer.render(any: pathWrapper.path, in: coordinator))
+        return AnyView(
+            renderer.render(any: pathWrapper.path, in: coordinator)
+                .environment(\.coordinator, coordinator)
+        )
     }
 
     private func renderer(for path: any CoordinatorPath) -> any CoordinatorPathRenderer {
