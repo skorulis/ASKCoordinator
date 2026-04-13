@@ -12,11 +12,11 @@ struct ViewModelView {
 // MARK: - Rendering
 
 extension ViewModelView: View {
-    
+
     var body: some View {
         VStack {
             Text("View Model View")
-            
+
             Button(action: viewModel.push) {
                 Text("Push View 2")
             }
@@ -26,9 +26,9 @@ extension ViewModelView: View {
 }
 
 @Observable final class ViewModel: CoordinatorViewModel {
-    
+
     weak var coordinator: Coordinator?
-    
+
     func push() {
         coordinator?.push(ExamplePath.view2)
     }

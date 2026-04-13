@@ -12,22 +12,22 @@ struct View2 {
 // MARK: - Rendering
 
 extension View2: View {
-    
+
     var body: some View {
         VStack {
             Text("View 2")
-            
+
             Button(action: { coordinator?.retreat()}) {
                 Text("Retreat")
             }
-            
+
             Button(action: { showDialog() }) {
                 Text("Show Dialog")
             }
         }
         .navigationTitle("View 2")
     }
-    
+
     private func showDialog() {
         coordinator?.custom(overlay: .dialog, ExamplePath.overlay)
     }

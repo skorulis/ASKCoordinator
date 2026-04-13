@@ -2,19 +2,18 @@
 
 import SwiftUI
 
-
 public struct CoordinatorView: View {
-    
+
     @State var coordinator: Coordinator
     private let renderers: [any CoordinatorPathRenderer]
-    private let overlayRenderers: [CustomOverlay.Name:  CustomOverlayRenderer]
+    private let overlayRenderers: [CustomOverlay.Name: CustomOverlayRenderer]
     @Environment(\.dismiss) private var dismiss
     private let useNavigationStack: Bool
-    
+
     public init(
         coordinator: Coordinator,
         renderers: [any CoordinatorPathRenderer] = [],
-        overlayRenderers: [CustomOverlay.Name:  CustomOverlayRenderer] = [:],
+        overlayRenderers: [CustomOverlay.Name: CustomOverlayRenderer] = [:],
         useNavigationStack: Bool = true,
     ) {
         self.coordinator = coordinator
@@ -22,7 +21,7 @@ public struct CoordinatorView: View {
         self.overlayRenderers = overlayRenderers
         self.useNavigationStack = useNavigationStack
     }
-    
+
     public var body: some View {
         mainContent
         .environment(\.coordinator, coordinator)
@@ -48,7 +47,7 @@ public struct CoordinatorView: View {
             )
         )
     }
-    
+
     @ViewBuilder
     private var mainContent: some View {
         if useNavigationStack {
@@ -64,19 +63,19 @@ public struct CoordinatorView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
     }
-    
+
     private func render(pathWrapper: PathWrapper) -> AnyView {
         let renderer = renderer(for: pathWrapper.path)
         return AnyView(renderer.render(any: pathWrapper.path, in: coordinator))
     }
-    
+
     private func renderer(for path: any CoordinatorPath) -> any CoordinatorPathRenderer {
         guard let renderer = renderers.first(where: { $0.canRender(path: path)}) else {
             fatalError("Could not find rendered for path \(path)")
         }
         return renderer
     }
-    
+
     public func with(renderer: any CoordinatorPathRenderer) -> CoordinatorView {
         return CoordinatorView(
             coordinator: coordinator,
@@ -85,7 +84,7 @@ public struct CoordinatorView: View {
             useNavigationStack: useNavigationStack,
         )
     }
-    
+
     public func with(overlay: CustomOverlay.Name, renderer: @escaping CustomOverlayRenderer) -> CoordinatorView {
         var dict = self.overlayRenderers
         dict[overlay] = renderer
@@ -96,7 +95,7 @@ public struct CoordinatorView: View {
             useNavigationStack: useNavigationStack,
         )
     }
-    
+
     private func binding(style: PresentationStyle) -> Binding<Coordinator?> {
         return Binding<Coordinator?> {
             return coordinator.presented?.only(style: style)?.coordinator
@@ -107,5 +106,3 @@ public struct CoordinatorView: View {
         }
     }
 }
-
-

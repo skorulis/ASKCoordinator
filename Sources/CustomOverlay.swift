@@ -7,7 +7,7 @@ public struct CustomOverlay: Identifiable {
     let name: CustomOverlay.Name
     let path: PathWrapper
     var visible: Bool
-    
+
     public var id: String {
         return "\(name.name)-\(path.id)"
     }
@@ -18,11 +18,10 @@ public typealias CustomOverlayRenderer = (AnyView, CoordinatorPath) -> AnyView
 extension CustomOverlay {
     public struct Name: Equatable, Hashable, Sendable {
         let name: String
-        
+
         public init(_ name: String) {
             self.name = name
         }
     }
 
 }
-

@@ -10,7 +10,7 @@ public protocol CoordinatorPath {
 public protocol CoordinatorPathRenderer {
     associatedtype PathType: CoordinatorPath
     associatedtype ViewType: View
-    
+
     @MainActor
     func render(path: PathType, in coordinator: Coordinator) -> ViewType
 }
@@ -30,23 +30,23 @@ extension CoordinatorPathRenderer {
 }
 
 public struct PathWrapper: Hashable {
-    
+
     let path: any CoordinatorPath
-    
+
     public init(path: any CoordinatorPath) {
         self.path = path
     }
-    
+
     public func hash(into hasher: inout Hasher) {
         hasher.combine(path.id)
     }
-    
+
     public static func == (lhs: PathWrapper, rhs: PathWrapper) -> Bool {
         return lhs.path.id == rhs.path.id
     }
-    
+
     var id: String {
         return path.id
     }
-    
+
 }
