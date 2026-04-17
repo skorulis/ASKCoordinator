@@ -74,6 +74,7 @@ import SwiftUI
     }
     
     public func dismissOverlay() {
+        guard !customOverlays.isEmpty else { return }
         _ = customOverlays.removeLast()
     }
     
